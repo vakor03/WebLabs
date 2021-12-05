@@ -1,0 +1,72 @@
+root {
+    --message-border: #604cc7;
+    --messsage-color: #403866;
+    --error-color: rgb(255, 0, 0);
+    --message-background: #fff;
+    --message-border-size: 5px;
+    --message-border-radius: 10px;
+    --message-width: 400px;
+    --message-height: 150px;
+    --message-margin-top: 200px;
+    --message-padding: 20px;
+    --message-text-margin-top: 20px;
+    --message-text-size: 20px;
+    --message-button-bottom-position: 10px;
+}
+
+div {
+    background-color: transparent;
+}
+
+.message {
+    background-color: var(--message-background);
+    border: var(--message-border);
+    border-radius: var(--message-border-radius);
+    border-style: solid;
+    border-width: var(--message-border-size);
+    flex-direction: column;
+    height: var(--message-height);
+    margin-top: var(--message-margin-top);
+    padding: var(--message-padding);
+    position: relative;
+    width: var(--message-width);
+}
+
+@media (max-width: 600px) {
+    .message {
+        width: 70%;
+    }
+}
+
+.text {
+    align-self: center;
+    background-color: transparent;
+    font-size: var(--message-text-size);
+    margin-top: var(--message-text-margin-top);
+}
+
+.button {
+    background-color: var(--button-background-color);
+
+    border: var(--input-border);
+    border-radius: var(--input-border-radius);
+    bottom: var(--message-button-bottom-position);
+    color: var(--button-text-color);
+
+    cursor: pointer;
+    font-family: var(--text-style);
+    font-size: var(--input-text-size);
+    height: var(--button-height);
+    margin: var(--button-margin);
+    outline: var(--input-border);
+    position: absolute;
+    width: var(--button-width);
+}
+
+.error {
+    color: var(--error-color);
+}
+
+.success {
+    color: var(--messsage-color);
+}
