@@ -1,0 +1,32 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["metarhia", "plugin:sonarjs/recommended"],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "jsx": true,
+        "sourceType": "module"
+    },
+    "globals": {
+        "BigInt": true
+    },
+    "plugins": ["sonarjs", "react"],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx"]
+            }
+        }
+    },
+    "rules": {
+        "sonarjs/cognitive-complexity": ["error", 15],
+        "indent": ["error", 4],
+        "max-len": ["error", 80, { "ignoreRegExpLiterals": true }],
+        "no-extra-parens": ["error", "all", { "ignoreJSX": "multi-line" }],
+        "react/prop-types": 0,
+        "react/destructuring-assignment": [2, "always"],
+        "import/no-unresolved": [2, { "caseSensitive": false }]
+    }
+}

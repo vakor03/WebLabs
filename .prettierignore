@@ -1,3 +1,5 @@
 *.css
-backend/
-
+.vs
+bin
+obj
+dist

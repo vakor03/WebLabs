@@ -1,6 +1,6 @@
 {
     "hosting": {
-        "public": "./Lab2/client/dist",
+        "public": "./Lab2/Frontend/dist",
         "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
         "rewrites": [
             {
@@ -14,6 +14,6 @@
         ]
     },
     "functions": {
-        "source": "Lab2/backend"
+        "source": "Lab2/functions"
     }
 }

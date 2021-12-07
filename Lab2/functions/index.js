@@ -9,9 +9,9 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-const rateLimit = {
-    ipNumberCalls: 5,
-    timeSeconds: 30,
+const rateLimiter = {
+    ipNumberCalls: 7,
+    timeSeconds: 45,
     ipData: new Map(),
 };
 
@@ -34,61 +34,62 @@ exports.api = functions.https.onRequest((req, res) => {
     const errorMessages = [];
     const currentIp = req.headers['fastly-client-ip'];
     const currentTime = new Date();
-    const currentIpUser = rateLimit.ipData.get(currentIp) ?? {
+    const currentIpUser = rateLimiter.ipData.get(currentIp) ?? {
         count: 0,
         time: currentTime,
     };
 
     if (
         currentTime !== currentIpUser?.time &&
-        (currentIpUser?.count >= rateLimit.ipNumberCalls ||
-            currentTime - currentIpUser?.time <= rateLimit.timeSeconds * 1000)
+        (currentIpUser?.count >= rateLimiter.ipNumberCalls ||
+            currentTime - currentIpUser?.time <= rateLimiter.timeSeconds * 1000)
     ) {
-        errorMessages.push('Too many requests. Please try later');
+        errorMessages.push('Too many requests. Try later');
         return res.status(429).json({
             errorMessages,
         });
     }
     currentIpUser.count++;
     currentIpUser.time = new Date();
-    rateLimit.ipData.set(currentIp, currentIpUser);
+    rateLimiter.ipData.set(currentIp, currentIpUser);
     if (!mailData) {
         return res.status(500).json({
             errorMessages,
         });
     }
-    const cleanMessage = sanitizeHtml(req.body.message);
     if (!req.body.name) {
-        errorMessages.push('Enter correct name');
+        errorMessages.push('Name is incorrect');
     }
     if (!validateEmail(req.body.recipient)) {
-        errorMessages.push('Enter correct e-mail');
+        errorMessages.push('Recipient e-mail is incorrect');
     }
-    if (!cleanMessage) {
-        errorMessages.push('Enter correct message');
+
+    const sanitizedMessage = sanitizeHtml(req.body.msg);
+    if (!sanitizedMessage) {
+        errorMessages.push('Message is incorrect');
     }
     if (errorMessages.length) {
         return res.status(500).json({
             errorMessages,
         });
     }
-    const output = `<p>${cleanMessage}</p>`;
+    const output = `<p>${sanitizedMessage}</p>`;
 
     return transporter
         .sendMail({
             from: `${req.body.name} <${mailData?.address}>`,
             to: `${req.body.recipient}`,
-            subject: 'Hello',
+            subject: 'Hi there',
             html: output,
         })
         .then(() => {
-            errorMessages.push('Your message was successfully sent');
+            errorMessages.push('Sent successfully');
             return res.json({
                 errorMessages,
             });
         })
         .catch(() => {
-            errorMessages.push('Something went wrong');
+            errorMessages.push('Sending error');
             return res.status(500).json({
                 errorMessages,
             });
