@@ -16,30 +16,34 @@ export class MailForm extends React.Component {
             isPopupVisible: false,
             isRateLimit: false,
             name: '',
-            recipient: '',
-            msg: '',
+            email: '',
+            message: '',
         };
     }
 
     handleSubmit = event => {
+
         event.preventDefault();
         const { name, email, message } = this.state;
+        console.log(name)
+        console.log(email)
+        console.log(message)
         this.setState({ isRequest: true });
         this.setState({ isPopupOnScreen: true });
         axios
             .post('/api', {
                 name,
-                recipient,
-                msg,
+                email,
+                message,
             })
             .then(res => {
                 this.setState({
-                    errorMessages: res.data.errorMessages,
+                    popupMessages: res?.data?.data,
                     isRequest: false,
                     isSuccess: true,
                     name: '',
-                    recipient: '',
-                    msg: '',
+                    email: '',
+                    message: '',
                 });
             })
             .catch(error => {
@@ -47,16 +51,9 @@ export class MailForm extends React.Component {
                     isRequest: false,
                     isSuccess: false,
                 });
-
-                if (!error?.response?.data) {
-                    this.setState({
-                        errorMessages: ['Something went wrong...'],
-                    });
-                    return;
-                }
                 this.setState({
-                    errorMessages: error.response.data.errorMessages ?? [
-                        'Something went wrong...',
+                    popupMessages: error?.response?.data?.errors ?? [
+                        { message: 'Something went wrong...' },
                     ],
                 });
             });
@@ -67,7 +64,7 @@ export class MailForm extends React.Component {
     };
 
     render() {
-        const { name, recipient, msg } = this.state;
+        const { name, email, message } = this.state;
 
         return (
             <div className="container">
@@ -79,7 +76,7 @@ export class MailForm extends React.Component {
                         name={'email'}
                         placeholder={'Your email address..'}
                         onChange={newEmail =>
-                            this.setState({ recipient: newEmail })
+                            this.setState({ email: newEmail.target.value })
                         }
                         required
                     />
@@ -90,7 +87,7 @@ export class MailForm extends React.Component {
                         id={'name'}
                         name={'name'}
                         placeholder={'Your name..'}
-                        onChange={newName => this.setState({ name: newName })}
+                        onChange={newName => this.setState({ name: newName.target.value })}
                         required
                     />
 
@@ -99,7 +96,7 @@ export class MailForm extends React.Component {
                         id={'message'}
                         name={'message'}
                         placeholder={'Write something..'}
-                        onChange={newMsg => this.setState({ msg: newMsg })}
+                        onChange={newMsg => this.setState({ message: newMsg.target.value })}
                         required
                     />
 

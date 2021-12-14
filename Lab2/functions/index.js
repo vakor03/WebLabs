@@ -44,9 +44,9 @@ exports.api = functions.https.onRequest((req, res) => {
         (currentIpUser?.count >= rateLimiter.ipNumberCalls ||
             currentTime - currentIpUser?.time <= rateLimiter.timeSeconds * 1000)
     ) {
-        errorMessages.push('Too many requests. Try later');
+        errorMessages.push({ message: 'Too many requests. Please try later' });
         return res.status(429).json({
-            errorMessages,
+            errors: errorMessages,
         });
     }
     currentIpUser.count++;
@@ -54,17 +54,10 @@ exports.api = functions.https.onRequest((req, res) => {
     rateLimiter.ipData.set(currentIp, currentIpUser);
     if (!mailData) {
         return res.status(500).json({
-            errorMessages,
+            errors: errorMessages,
         });
     }
-    if (!req.body.name) {
-        errorMessages.push('Name is incorrect');
-    }
-    if (!validateEmail(req.body.recipient)) {
-        errorMessages.push('Recipient e-mail is incorrect');
-    }
-
-    const sanitizedMessage = sanitizeHtml(req.body.msg);
+    const sanitizedMessage = sanitizeHtml(req.body.message);
     if (!sanitizedMessage) {
         errorMessages.push('Message is incorrect');
     }
@@ -78,7 +71,7 @@ exports.api = functions.https.onRequest((req, res) => {
     return transporter
         .sendMail({
             from: `${req.body.name} <${mailData?.address}>`,
-            to: `${req.body.recipient}`,
+            to: `${req.body.email}`,
             subject: 'Hi there',
             html: output,
         })
