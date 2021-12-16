@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="Styles/slider-styles.css" type="text/css" rel="stylesheet">
+    <link href="Styles/nav_styles.css" type="text/css" rel="stylesheet">
+    <link href="Styles/main-styles.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav role="navigation">
+        <div id="menuToggle">
+            <input type="checkbox"/>
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <ul id="menu">
+                <a href="#">
+                    <li>Home</li>
+                </a>
+                <a href="#">
+                    <li>About</li>
+                </a>
+                <a href="#">
+                    <li>Info</li>
+                </a>
+                <a href="#">
+                    <li>Contact</li>
+                </a>
+            </ul>
+        </div>
+    </nav>
+    <h1>Pure css menu and slider</h1>
+</header>
+
+
+<div class="slider-container">
+
+
+    <input type="radio" id="i1" name="images" checked/>
+    <input type="radio" id="i2" name="images"/>
+    <input type="radio" id="i3" name="images"/>
+    <input type="radio" id="i4" name="images"/>
+
+    <div class="slide_img" id="one">
+
+        <img src="images/1.jpg">
+
+        <label class="prev" for="i4"><span></span></label>
+        <label class="next" for="i2"><span></span></label>
+
+    </div>
+
+    <div class="slide_img" id="two">
+
+        <img src="images/2.jpg">
+
+        <label class="prev" for="i1"><span></span></label>
+        <label class="next" for="i3"><span></span></label>
+
+    </div>
+
+    <div class="slide_img" id="three">
+        <img src="images/3.jpg">
+
+        <label class="prev" for="i2"><span></span></label>
+        <label class="next" for="i4"><span></span></label>
+    </div>
+
+
+    <div class="slide_img" id="four">
+        <img src="images/4.jpg">
+
+        <label class="prev" for="i3"><span></span></label>
+        <label class="next" for="i1"><span></span></label>
+
+    </div>
+
+    <div id="nav_slide">
+        <label for="i1" class="dots" id="dot1"></label>
+        <label for="i2" class="dots" id="dot2"></label>
+        <label for="i3" class="dots" id="dot3"></label>
+        <label for="i4" class="dots" id="dot4"></label>
+    </div>
+
+</div>
+
+</body>
+</html>
