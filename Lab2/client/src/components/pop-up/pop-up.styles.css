@@ -1,13 +1,37 @@
-root {
-    --pop-up-background-color: rgba(255, 255, 255, 0.8);
+.popUp {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    padding: 0;
+    margin: 0;
 }
 
-.popUp {
-    background-color: var(--pop-up-background-color);
-    bottom: 0;
+.popUp.active{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popUp_content{
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(
+            90deg,
+            rgba(93, 12, 255, 1) 0%,
+            rgba(155, 0, 250, 1) 100%
+    );
+    color: #fff;
+    align-content: center;
+}
+
+.popUp-icon{
+    cursor: pointer;
     left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1;
+    top:0;
+    text-align: left;
 }

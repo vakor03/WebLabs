@@ -1,9 +1,9 @@
 import React from 'react';
-import classes from './spinnet.styles.css';
+import './spinnet.styles.css';
 
 function Spinner() {
     return (
-        <div className={classes['lds-default']}>
+        <div className={'lds-default'}>
             <div></div>
             <div></div>
             <div></div>

@@ -7,13 +7,17 @@
     --form-el-margin-bot: 16px;
 
     --submit-text-color: #fff;
-    --submit-background-color: #04aa6d;
+    --submit-background-color: rgba(255, 118, 20, .8);
     --submit-paddings-vertical: 12px;
     --submit-paddings-horizontal: 20px;
 
-    --label-text-color: #23272a;
+    --label-text-color: #fff;
 
-    --container-background-color: #f2f2f2;
+    --container-background: linear-gradient(
+            90deg,
+            rgba(20, 159, 255, 0.5) 0%,
+            rgba(17, 122, 255, 0.5) 100%
+    );;
     --container-padding: 20px;
 }
 
@@ -49,6 +53,16 @@ label {
 /*}*/
 
 .container {
-    background-color: var(--container-background-color);
+    opacity: 0.3;
+    pointer-events: none;
+    background: var(--container-background);
     padding: var(--container-padding);
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 10px;
+}
+
+.container.active {
+    opacity: 1;
+    pointer-events: all;
 }
